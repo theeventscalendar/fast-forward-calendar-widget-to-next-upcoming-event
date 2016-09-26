@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: The Events Calendar — Fast Forward Calendar Widget to Next Upcoming Event
+ * Plugin Name: The Events Calendar Extension: Fast Forward Calendar Widget to Next Upcoming Event
  * Description: In instances of the mini calendar widget, empty months will be skipped.
  * Version: 1.0.0
  * Author: Modern Tribe, Inc.
@@ -10,7 +10,7 @@
 
 defined( 'WPINC' ) or die;
 
-class TEC__Fast_Forward_Calendar_Widget_to_Next_Upcoming {
+class Tribe__Fast_Forward_Calendar_Widget_to_Next_Upcoming {
 
 	/**
 	 * Snippet version.
@@ -37,33 +37,33 @@ class TEC__Fast_Forward_Calendar_Widget_to_Next_Upcoming {
 	protected $target_date = false;
 
 	/**
-	 * TEC__Fast_Forward_Calendar_Widget_to_Next_Upcoming constructor.
+	 * Tribe__Fast_Forward_Calendar_Widget_to_Next_Upcoming constructor.
 	 *
 	 * @return void
 	 */
-    public function __construct() {
+        public function __construct() {
         add_action( 'plugins_loaded', array( $this, 'init' ), 100 );
-    }
+        }
 
-    /**
+        /**
 	 * Snippet hooks and initialization.
 	 *
 	 * @return void
 	 */
-    public function init() {
+        public function init() {
 
-        if ( ! function_exists( 'tribe_register_plugin' ) || ! tribe_register_plugin( __FILE__, __CLASS__, self::VERSION, $this->plugins_required ) ) {
-            return;
+            if ( ! function_exists( 'tribe_register_plugin' ) || ! tribe_register_plugin( __FILE__, __CLASS__, self::VERSION, $this->plugins_required ) ) {
+                return;
+            }
+
+            if ( is_admin() )
+            	return;
+            	
+            	$this->target_date = $target_date;
+            	
+            	add_action( 'wp_loaded', array( $this, 'set_target_date' ) );
+            	add_filter( 'widget_display_callback', array( $this, 'advance_minical' ), 20, 2 );
         }
-
-        if ( is_admin() )
-			return;
-		
-		$this->target_date = $target_date;
-		
-		add_action( 'wp_loaded', array( $this, 'set_target_date' ) );
-		add_filter( 'widget_display_callback', array( $this, 'advance_minical' ), 20, 2 );
-    }
 
 	/**
 	 * Filter out spurious date formats.
@@ -159,4 +159,4 @@ class TEC__Fast_Forward_Calendar_Widget_to_Next_Upcoming {
 	}
 }
 
-new TEC__Fast_Forward_Calendar_Widget_to_Next_Upcoming();
+new Tribe__Fast_Forward_Calendar_Widget_to_Next_Upcoming();
