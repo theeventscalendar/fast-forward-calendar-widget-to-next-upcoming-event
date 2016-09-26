@@ -10,12 +10,10 @@
 
 defined( 'WPINC' ) or die;
 
-class Tribe__Fast_Forward_Calendar_Widget_to_Next_Upcoming {
+class Tribe__Extension__Fast_Forward_Calendar_Widget_to_Next_Upcoming {
 
 	/**
 	 * Snippet version.
-	 *
-	 * @var string
 	 */
 	const VERSION = '1.0.0';
 
@@ -37,12 +35,10 @@ class Tribe__Fast_Forward_Calendar_Widget_to_Next_Upcoming {
 	protected $target_date = false;
 
 	/**
-	 * Tribe__Fast_Forward_Calendar_Widget_to_Next_Upcoming constructor.
-	 *
-	 * @return void
+	 * Tribe__Extension__Fast_Forward_Calendar_Widget_to_Next_Upcoming constructor.
 	 */
         public function __construct() {
-        add_action( 'plugins_loaded', array( $this, 'init' ), 100 );
+            add_action( 'plugins_loaded', array( $this, 'init' ), 100 );
         }
 
         /**
@@ -67,8 +63,6 @@ class Tribe__Fast_Forward_Calendar_Widget_to_Next_Upcoming {
 
 	/**
 	 * Filter out spurious date formats.
-	 *
-	 * @return void
 	 */
 	public function set_target_date() {
 	
@@ -159,4 +153,4 @@ class Tribe__Fast_Forward_Calendar_Widget_to_Next_Upcoming {
 	}
 }
 
-new Tribe__Fast_Forward_Calendar_Widget_to_Next_Upcoming();
+new Tribe__Extension__Fast_Forward_Calendar_Widget_to_Next_Upcoming();
