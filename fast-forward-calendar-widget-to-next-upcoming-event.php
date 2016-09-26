@@ -4,32 +4,66 @@
  * Description: In instances of the mini calendar widget, empty months will be skipped.
  * Version: 1.0.0
  * Author: Modern Tribe, Inc.
- * Author URI: http://m.tri.be/1x
+ * Author URI: http://m.tri.be/1971
  * License: GPLv2 or later
  */
 
 defined( 'WPINC' ) or die;
 
-class Tribe_Advance_Minical {
+class TEC__Fast_Forward_Calendar_Widget_to_Next_Upcoming {
 
+	/**
+	 * Snippet version.
+	 *
+	 * @var string
+	 */
+	const VERSION = '1.0.0';
+
+	/**
+	 * Required plugins for the snippet to run.
+	 *
+	 * @var array
+	 */
+	public $plugins_required = array(
+	    'Tribe__Events__Main'      => '4.2',
+	    'Tribe__Events__Pro__Main' => '4.2',
+	);
+
+	/**
+	 * An optional specific month to jump to, instead of the default "next month with events" behavior.
+	 *
+	 * @var bool|string
+	 */
 	protected $target_date = false;
 
 	/**
-	 * If an optional target date is provided that will be used to set the month.
+	 * TEC__Fast_Forward_Calendar_Widget_to_Next_Upcoming constructor.
 	 *
-	 * @param bool $target_date
 	 * @return void
 	 */
-	public function __construct( $target_date = false ) {
-		
-		if ( is_admin() )
+    public function __construct() {
+        add_action( 'plugins_loaded', array( $this, 'init' ), 100 );
+    }
+
+    /**
+	 * Snippet hooks and initialization.
+	 *
+	 * @return void
+	 */
+    public function init() {
+
+        if ( ! function_exists( 'tribe_register_plugin' ) || ! tribe_register_plugin( __FILE__, __CLASS__, self::VERSION, $this->plugins_required ) ) {
+            return;
+        }
+
+        if ( is_admin() )
 			return;
 		
 		$this->target_date = $target_date;
 		
 		add_action( 'wp_loaded', array( $this, 'set_target_date' ) );
 		add_filter( 'widget_display_callback', array( $this, 'advance_minical' ), 20, 2 );
-	}
+    }
 
 	/**
 	 * Filter out spurious date formats.
@@ -46,6 +80,8 @@ class Tribe_Advance_Minical {
 	/**
 	 * Perform the "fast-forwarding" of months.
 	 *
+	 * @param array $instance
+	 * @param object $widget
 	 * @return object
 	 */
 	public function advance_minical( $instance, $widget ) {
@@ -66,6 +102,7 @@ class Tribe_Advance_Minical {
 	/**
 	 * Perform the "fast-forwarding" of months.
 	 *
+	 * @param string $template
 	 * @return void
 	 */
 	public function modify_list_query( $template ) {
@@ -79,6 +116,7 @@ class Tribe_Advance_Minical {
 	/**
 	 * Modify the mini calendar widget's query.
 	 *
+	 * @param object $query
 	 * @return void
 	 */
 	public function amend_list_query( $query ) {
@@ -121,4 +159,4 @@ class Tribe_Advance_Minical {
 	}
 }
 
-new Tribe_Advance_Minical();
+new TEC__Fast_Forward_Calendar_Widget_to_Next_Upcoming();
